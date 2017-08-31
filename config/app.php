@@ -80,6 +80,9 @@ return [
 
     'locale' => 'ja',
 
+    // faker
+    'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -226,6 +229,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        'Uuid' => Webpatser\Uuid\Uuid::class,
     ],
 
 ];
