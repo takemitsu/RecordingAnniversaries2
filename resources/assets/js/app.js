@@ -7,7 +7,8 @@ Vue.use(VueRouter)
 Vue.component('pagination', require('laravel-vue-pagination'))
 
 const routes = [
-    {path:'/users', component: require('./components/Users.vue') },
+    {path:'/users',      name: "users", component: require('./components/User/List.vue') },
+    {path:'/user/:uuid', name: "user", component: require('./components/User/Edit.vue')},
     {path:'*', component: require('./components/Example.vue')},
 ]
 

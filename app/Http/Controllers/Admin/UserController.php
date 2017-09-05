@@ -32,8 +32,6 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        info("show");
-        info($user);
         return $user;
     }
 
@@ -46,10 +44,15 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
-        info("update");
-        info($user);
-        info($request->all());
+        $request->validate([
+            'name' => 'required|string|max:128',
+            'email' => 'required|email|unique:users,email,'.$user->id.',id',
+        ]);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->save();
+
         return $user;
     }
 
@@ -61,8 +64,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        info("destroy");
-        info($user);
+        $user->delete();
         return [];
     }
 }

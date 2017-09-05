@@ -793,7 +793,7 @@ __webpack_require__(10);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('pagination', __webpack_require__(54));
 
-var routes = [{ path: '/users', component: __webpack_require__(51) }, { path: '*', component: __webpack_require__(37) }];
+var routes = [{ path: '/users', name: "users", component: __webpack_require__(55) }, { path: '/user/:uuid', name: "user", component: __webpack_require__(58) }, { path: '*', component: __webpack_require__(37) }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     routes: routes
@@ -44544,207 +44544,9 @@ if (false) {
 /* 48 */,
 /* 49 */,
 /* 50 */,
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var Component = __webpack_require__(38)(
-  /* script */
-  __webpack_require__(52),
-  /* template */
-  __webpack_require__(53),
-  /* styles */
-  null,
-  /* scopeId */
-  null,
-  /* moduleIdentifier (server only) */
-  null
-)
-Component.options.__file = "/home/vagrant/code/ra2/resources/assets/js/components/Users.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Users.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6281dfe6", Component.options)
-  } else {
-    hotAPI.reload("data-v-6281dfe6", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 52 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      loading: false,
-      users: [],
-      error: null,
-      data: {
-        total: 0
-      }
-    };
-  },
-  created: function created() {
-    // view が作られた時にデータを取得し、
-    // そのデータは既に監視されています
-    this.fetchData();
-  },
-
-  watch: {
-    // ルートが変更されたらこのメソッドを再び呼び出します
-    '$route': 'fetchData'
-  },
-  methods: {
-    fetchData: function fetchData(page) {
-      var self = this;
-
-      if (typeof page === 'undefined') {
-        page = 1;
-      }
-
-      self.error = null;
-      self.users = [];
-      self.loading = true;
-
-      return axios.get('/admin/api/user' + '?page=' + page).then(function (response) {
-        self.loading = false;
-        self.users = response.data.data;
-        self.data = response.data;
-      }).catch(function (error) {
-        self.loading = false;
-        self.error = error.response.status + " : " + error.response.data.message;
-
-        if (error.response.status == 401) {
-          // TODO: Redirect
-        }
-      });
-    }
-  }
-});
-
-/***/ }),
-/* 53 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "container"
-  }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-12"
-  }, [_c('div', {
-    staticClass: "panel panel-default"
-  }, [(_vm.loading) ? _c('div', {
-    staticClass: "panel-body"
-  }, [_vm._v("\n          Loading...\n        ")]) : _vm._e(), _vm._v(" "), (_vm.error) ? _c('div', {
-    staticClass: "panel-body"
-  }, [_c('div', {
-    staticClass: "alert alert-danger",
-    staticStyle: {
-      "margin-bottom": "0"
-    }
-  }, [_vm._v("\n            " + _vm._s(_vm.error) + "\n          ")])]) : _vm._e(), _vm._v(" "), (_vm.users.length > 0) ? _c('table', {
-    staticClass: "table table-bordered"
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.users), function(user) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(user.uuid))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.email))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.created_at))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.updated_at))])])
-  }))]) : _vm._e(), _vm._v(" "), (_vm.users.length == 0 && _vm.loading == false && _vm.error == null) ? _c('div', {
-    staticClass: "alert alert-warning"
-  }, [_vm._v("\n          not found users.\n        ")]) : _vm._e(), _vm._v(" "), _c('div', {
-    staticClass: "panel-body"
-  }, [_c('pagination', {
-    staticStyle: {
-      "margin": "0"
-    },
-    attrs: {
-      "data": _vm.data
-    },
-    on: {
-      "pagination-change-page": _vm.fetchData
-    }
-  })], 1)])])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("uuid")]), _vm._v(" "), _c('th', [_vm._v("name")]), _vm._v(" "), _c('th', [_vm._v("email")]), _vm._v(" "), _c('th', [_vm._v("created_at")]), _vm._v(" "), _c('th', [_vm._v("updated_at")])])])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-6281dfe6", module.exports)
-  }
-}
-
-/***/ }),
+/* 51 */,
+/* 52 */,
+/* 53 */,
 /* 54 */
 /***/ (function(module, exports) {
 
@@ -44812,6 +44614,555 @@ module.exports = {
 	}
 };
 
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(38)(
+  /* script */
+  __webpack_require__(56),
+  /* template */
+  __webpack_require__(57),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/home/vagrant/code/ra2/resources/assets/js/components/User/List.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] List.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-51736707", Component.options)
+  } else {
+    hotAPI.reload("data-v-51736707", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 56 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      loading: false,
+      users: [],
+      error: null,
+      status: null,
+      data: {
+        total: 0
+      },
+      page: 1
+    };
+  },
+  created: function created() {
+    // view が作られた時にデータを取得し、
+    // そのデータは既に監視されています
+    this.fetchData();
+  },
+
+  watch: {
+    // ルートが変更されたらこのメソッドを再び呼び出します
+    '$route': 'fetchData'
+  },
+  methods: {
+    fetchData: function fetchData(page) {
+      var self = this;
+
+      if (typeof page === 'undefined') {
+        page = 1;
+      }
+
+      self.error = null;
+      self.users = [];
+      self.loading = true;
+
+      return axios.get('/admin/api/user' + '?page=' + page).then(function (response) {
+        self.loading = false;
+        self.users = response.data.data;
+        self.data = response.data;
+        self.page = self.data.current_page;
+        // 最後のページで削除されたときのアレ
+        if (response.data.current_page != 1 && self.users.length == 0) {
+          self.fetchData(response.data.current_page - 1);
+        }
+      }).catch(function (error) {
+        self.loading = false;
+        self.error = error.response.status + " : " + error.response.data.message;
+
+        if (error.response.status == 401) {
+          // TODO: Redirect
+        }
+      });
+    },
+
+
+    // ユーザ削除
+    del: function del(user) {
+      if (confirm(user.name + " を削除しますか")) {
+        var self = this;
+        return axios({
+          method: 'delete',
+          url: '/admin/api/user/' + encodeURIComponent(user.uuid)
+        }).then(function (response) {
+          self.fetchData(self.page);
+        }).catch(function (error) {
+          self.loading = false;
+          self.error = error.response.status + " : " + error.response.data.message;
+
+          if (error.response.status == 401) {
+            // TODO: Redirect
+          }
+        });
+      }
+    }
+  }
+});
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "container"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-12"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [(_vm.loading) ? _c('div', {
+    staticClass: "panel-body"
+  }, [_vm._v("\n          Loading...\n        ")]) : _vm._e(), _vm._v(" "), (_vm.error) ? _c('div', {
+    staticClass: "panel-body"
+  }, [_c('div', {
+    staticClass: "alert alert-danger",
+    staticStyle: {
+      "margin-bottom": "0"
+    }
+  }, [_vm._v("\n            " + _vm._s(_vm.error) + "\n          ")])]) : _vm._e(), _vm._v(" "), (_vm.status) ? _c('div', {
+    staticClass: "panel-body"
+  }, [_c('div', {
+    staticClass: "alert alert-success",
+    staticStyle: {
+      "margin-bottom": "0"
+    }
+  }, [_vm._v("\n            " + _vm._s(_vm.status) + "\n          ")])]) : _vm._e(), _vm._v(" "), (_vm.users.length > 0) ? _c('table', {
+    staticClass: "table table-bordered"
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.users), function(user) {
+    return _c('tr', [_c('td', [_c('router-link', {
+      attrs: {
+        "to": {
+          name: 'user',
+          params: {
+            uuid: user.uuid
+          }
+        }
+      }
+    }, [_vm._v(_vm._s(user.name))])], 1), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.email))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.created_at))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.updated_at))]), _vm._v(" "), _c('td', [_c('router-link', {
+      staticClass: "btn btn-default btn-xs",
+      attrs: {
+        "to": {
+          name: 'user',
+          params: {
+            uuid: user.uuid
+          }
+        }
+      }
+    }, [_vm._v("編集")]), _vm._v(" "), _c('button', {
+      staticClass: "btn btn-danger btn-xs",
+      on: {
+        "click": function($event) {
+          _vm.del(user)
+        }
+      }
+    }, [_vm._v("削除")])], 1)])
+  }))]) : _vm._e(), _vm._v(" "), (_vm.users.length == 0 && _vm.loading == false && _vm.error == null) ? _c('div', {
+    staticClass: "alert alert-warning",
+    staticStyle: {
+      "margin-bottom": "0"
+    }
+  }, [_vm._v("\n          not found users.\n        ")]) : _vm._e(), _vm._v(" "), (_vm.users.length > 0) ? _c('div', {
+    staticClass: "panel-body"
+  }, [_c('pagination', {
+    staticStyle: {
+      "margin": "0"
+    },
+    attrs: {
+      "data": _vm.data
+    },
+    on: {
+      "pagination-change-page": _vm.fetchData
+    }
+  })], 1) : _vm._e()])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("name")]), _vm._v(" "), _c('th', [_vm._v("email")]), _vm._v(" "), _c('th', [_vm._v("created_at")]), _vm._v(" "), _c('th', [_vm._v("updated_at")]), _vm._v(" "), _c('th', [_vm._v("action")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-51736707", module.exports)
+  }
+}
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(38)(
+  /* script */
+  __webpack_require__(59),
+  /* template */
+  __webpack_require__(60),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/home/vagrant/code/ra2/resources/assets/js/components/User/Edit.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Edit.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-60bb8e73", Component.options)
+  } else {
+    hotAPI.reload("data-v-60bb8e73", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 59 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      loading: false,
+      user: null,
+      error: null
+    };
+  },
+  created: function created() {
+    // view が作られた時にデータを取得し、
+    // そのデータは既に監視されています
+    this.fetchData();
+  },
+
+  watch: {
+    // ルートが変更されたらこのメソッドを再び呼び出します
+    '$route': 'fetchData'
+  },
+  methods: {
+    fetchData: function fetchData() {
+      var self = this;
+      self.error = null;
+      self.user = null;
+      self.loading = true;
+
+      return axios.get('/admin/api/user/' + encodeURIComponent(this.$route.params.uuid)).then(function (response) {
+        self.loading = false;
+        self.user = response.data;
+      }).catch(function (error) {
+        self.loading = false;
+        self.error = error.response.status + " : " + error.response.data.message;
+
+        if (error.response.status == 401) {
+          // TODO: Redirect Login Page
+        }
+      });
+    },
+    save: function save() {
+      var self = this;
+      return axios({
+        method: 'put',
+        url: '/admin/api/user/' + encodeURIComponent(self.$route.params.uuid),
+        data: self.user
+      }).then(function (response) {
+        self.loading = false;
+        self.$router.push({ name: 'users' });
+      }).catch(function (error) {
+        // ここには then 内でのエラーも catch されて実行される..
+        console.log('error', error);
+        self.loading = false;
+        self.error = error.response.status + " : " + error.response.data.message;
+
+        if (error.response.status == 401) {
+          // TODO: Redirect Login Page
+        }
+      });
+    }
+  }
+});
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "container"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-6 col-md-offset-3"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("\n          Edit User\n        ")]), _vm._v(" "), (_vm.loading) ? _c('div', {
+    staticClass: "panel-body"
+  }, [_vm._v("\n          Loading...\n        ")]) : _vm._e(), _vm._v(" "), (_vm.error) ? _c('div', {
+    staticClass: "panel-body"
+  }, [_c('div', {
+    staticClass: "alert alert-danger",
+    staticStyle: {
+      "margin-bottom": "0"
+    }
+  }, [_vm._v("\n            " + _vm._s(_vm.error) + "\n          ")])]) : _vm._e(), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [(_vm.user) ? _c('form', {
+    staticClass: "form-horizontal"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "col-sm-3 control-label"
+  }, [_vm._v("Name")]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-9"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.user.name),
+      expression: "user.name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "placeholder": "name"
+    },
+    domProps: {
+      "value": (_vm.user.name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.user.name = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "col-sm-3 control-label"
+  }, [_vm._v("Email")]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-9"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.user.email),
+      expression: "user.email"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "placeholder": "email"
+    },
+    domProps: {
+      "value": (_vm.user.email)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.user.email = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "col-sm-3 control-label"
+  }, [_vm._v("Created At")]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-9"
+  }, [_c('p', {
+    staticClass: "form-control-static"
+  }, [_vm._v(_vm._s(_vm.user.created_at))])])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group",
+    staticStyle: {
+      "margin-bottom": "0"
+    }
+  }, [_c('div', {
+    staticClass: "col-sm-9 col-sm-offset-3"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    on: {
+      "click": _vm.save
+    }
+  }, [_vm._v("save")])])])]) : _vm._e()])])])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-60bb8e73", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
