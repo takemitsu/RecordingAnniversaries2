@@ -37,6 +37,10 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         &nbsp;
+                        @auth
+                            <li><router-link to="/users">Users</router-link></li>
+                            <li><router-link to="/example">Example</router-link></li>
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->

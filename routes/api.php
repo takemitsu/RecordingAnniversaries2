@@ -18,6 +18,7 @@ use App\Model\User;
  * TODO: 後から削除する
  */
 
+/*
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -33,3 +34,4 @@ Route::get('/users', function() {
 Route::get('/users/{user}', function(User $user) {
     return $user;
 });
+*/

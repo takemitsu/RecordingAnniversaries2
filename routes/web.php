@@ -18,3 +18,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+// TODO: create routes/admin.php and edit app/Providers/RouteServiceProvider.php
+Route::prefix('admin')->group(function () {
+    Route::prefix('api')->group(function () {
+        Route::resource('user', 'Admin\UserController', ['only' => [
+            'index', 'show', 'update', 'destroy',
+        ]]);
+    });
+});
