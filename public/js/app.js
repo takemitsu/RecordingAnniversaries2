@@ -789,7 +789,9 @@ __webpack_require__(10);
 
 
 
+
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('pagination', __webpack_require__(54));
 
 var routes = [{ path: '/users', component: __webpack_require__(51) }, { path: '*', component: __webpack_require__(37) }];
 
@@ -44635,13 +44637,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       loading: false,
       users: [],
-      error: null
+      error: null,
+      data: {
+        total: 0
+      }
     };
   },
   created: function created() {
@@ -44655,17 +44665,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     '$route': 'fetchData'
   },
   methods: {
-    fetchData: function fetchData() {
+    fetchData: function fetchData(page) {
       var self = this;
-      console.log(this.$route);
+
+      if (typeof page === 'undefined') {
+        page = 1;
+      }
 
       self.error = null;
       self.users = [];
       self.loading = true;
 
-      return axios.get('/admin/api/user').then(function (response) {
+      return axios.get('/admin/api/user' + '?page=' + page).then(function (response) {
         self.loading = false;
-        self.users = response.data;
+        self.users = response.data.data;
+        self.data = response.data;
       }).catch(function (error) {
         self.loading = false;
         self.error = error.response.status + " : " + error.response.data.message;
@@ -44706,7 +44720,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('tr', [_c('td', [_vm._v(_vm._s(user.uuid))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.email))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.created_at))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.updated_at))])])
   }))]) : _vm._e(), _vm._v(" "), (_vm.users.length == 0 && _vm.loading == false && _vm.error == null) ? _c('div', {
     staticClass: "alert alert-warning"
-  }, [_vm._v("\n          not found users.\n        ")]) : _vm._e()])])])])
+  }, [_vm._v("\n          not found users.\n        ")]) : _vm._e(), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('pagination', {
+    staticStyle: {
+      "margin": "0"
+    },
+    attrs: {
+      "data": _vm.data
+    },
+    on: {
+      "pagination-change-page": _vm.fetchData
+    }
+  })], 1)])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("uuid")]), _vm._v(" "), _c('th', [_vm._v("name")]), _vm._v(" "), _c('th', [_vm._v("email")]), _vm._v(" "), _c('th', [_vm._v("created_at")]), _vm._v(" "), _c('th', [_vm._v("updated_at")])])])
 }]}
@@ -44717,6 +44743,75 @@ if (false) {
      require("vue-hot-reload-api").rerender("data-v-6281dfe6", module.exports)
   }
 }
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	props: {
+		data: {
+			type: Object,
+			default: function() {
+				return {
+					current_page: 1,
+					data: [],
+					from: 1,
+					last_page: 1,
+					next_page_url: null,
+					per_page: 10,
+					prev_page_url: null,
+					to: 1,
+					total: 0,
+				}
+			}
+		},
+		limit: {
+			type: Number,
+			default: 0
+		}
+	},
+
+	template: '<ul class="pagination" v-if="data.total > data.per_page">\
+		<li class="page-item" v-if="data.prev_page_url">\
+			<a class="page-link" href="#" aria-label="Previous" @click.prevent="selectPage(--data.current_page)"><span aria-hidden="true">&laquo;</span></a>\
+		</li>\
+		<li class="page-item" v-for="n in getPages()" :class="{ \'active\': n == data.current_page }"><a class="page-link" href="#" @click.prevent="selectPage(n)">{{ n }}</a></li>\
+		<li class="page-item" v-if="data.next_page_url">\
+			<a class="page-link" href="#" aria-label="Next" @click.prevent="selectPage(++data.current_page)"><span aria-hidden="true">&raquo;</span></a>\
+		</li>\
+	</ul>',
+
+	methods: {
+		selectPage: function(page) {
+			this.$emit('pagination-change-page', page);
+		},
+		getPages: function() {
+			if (this.limit === -1) {
+				return 0;
+			}
+
+			if (this.limit === 0) {
+				return this.data.last_page;
+			}
+
+        	var start = this.data.current_page - this.limit,
+        	    end   = this.data.current_page + this.limit + 1,
+        	    pages = [],
+        	    index;
+
+        	start = start < 1 ? 1 : start;
+        	end   = end >= this.data.last_page ? this.data.last_page + 1 : end;
+
+        	for (index = start; index < end; index++) {
+        		pages.push(index);
+        	}
+
+        	return pages;
+		}
+	}
+};
+
 
 /***/ })
 /******/ ]);

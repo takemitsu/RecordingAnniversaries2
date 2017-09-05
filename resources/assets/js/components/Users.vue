@@ -39,6 +39,11 @@
           <div v-if="users.length == 0 && loading == false && error == null" class="alert alert-warning">
             not found users.
           </div>
+
+          <div class="panel-body">
+            <pagination :data="data" v-on:pagination-change-page="fetchData" style="margin: 0;"></pagination>
+          </div>
+
         </div>
 
       </div>
@@ -52,7 +57,10 @@
       return {
         loading: false,
         users: [],
-        error: null
+        error: null,
+        data: {
+          total: 0,
+        },
       }
     },
     created () {
@@ -65,18 +73,22 @@
       '$route': 'fetchData'
     },
     methods: {
-      fetchData () {
+      fetchData (page) {
         var self = this
-        console.log(this.$route)
+
+        if (typeof page === 'undefined') {
+          page =1
+        }
 
         self.error = null
         self.users = []
         self.loading = true
 
-        return axios.get('/admin/api/user')
+        return axios.get('/admin/api/user' + '?page=' + page)
           .then(function(response) {
             self.loading = false
-            self.users = response.data
+            self.users = response.data.data
+            self.data = response.data
           })
           .catch(function(error) {
             self.loading = false
