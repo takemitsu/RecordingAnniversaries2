@@ -44528,6 +44528,8 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Common__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Common___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Common__);
 //
 //
 //
@@ -44592,6 +44594,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -44638,16 +44642,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           self.fetchData(response.data.current_page - 1);
         }
       }).catch(function (error) {
-        self.loading = false;
-        console.error(error);
-        if (error.response) {
-          self.error = error.response.status + " : " + error.response.data.message;
-          if (error.response.status == 401) {
-            window.location.href = "/login";
-          }
-        } else {
-          self.error = error.message;
-        }
+        __WEBPACK_IMPORTED_MODULE_0__Common___default.a.errorMessage(error, self);
       });
     },
 
@@ -44665,16 +44660,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           self.loading = false;
           self.fetchData(self.page);
         }).catch(function (error) {
-          self.loading = false;
-          console.error(error);
-          if (error.response) {
-            self.error = error.response.status + " : " + error.response.data.message;
-            if (error.response.status == 401) {
-              window.location.href = "/login";
-            }
-          } else {
-            self.error = error.message;
-          }
+          __WEBPACK_IMPORTED_MODULE_0__Common___default.a.errorMessage(error, self);
         });
       }
     }
@@ -44815,6 +44801,8 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Common__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Common___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Common__);
 //
 //
 //
@@ -44871,6 +44859,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -44901,16 +44891,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         self.loading = false;
         self.user = response.data;
       }).catch(function (error) {
-        self.loading = false;
-        console.error(error);
-        if (error.response) {
-          self.error = error.response.status + " : " + error.response.data.message;
-          if (error.response.status == 401) {
-            window.location.href = "/login";
-          }
-        } else {
-          self.error = error.message;
-        }
+        __WEBPACK_IMPORTED_MODULE_0__Common___default.a.errorMessage(error, self);
       });
     },
     save: function save() {
@@ -44925,16 +44906,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         self.loading = false;
         self.$router.push({ name: 'users' });
       }).catch(function (error) {
-        self.loading = false;
-        console.error(error);
-        if (error.response) {
-          self.error = error.response.status + " : " + error.response.data.message;
-          if (error.response.status == 401) {
-            window.location.href = "/login";
-          }
-        } else {
-          self.error = error.message;
-        }
+        __WEBPACK_IMPORTED_MODULE_0__Common___default.a.errorMessage(error, self);
       });
     }
   }
@@ -44964,9 +44936,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "margin-bottom": "0"
     }
-  }, [_vm._v("\n            " + _vm._s(_vm.error) + "\n          ")])]) : _vm._e(), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n            " + _vm._s(_vm.error) + "\n          ")])]) : _vm._e(), _vm._v(" "), (_vm.user) ? _c('div', {
     staticClass: "panel-body"
-  }, [(_vm.user) ? _c('form', {
+  }, [_c('form', {
     staticClass: "form-horizontal"
   }, [_c('div', {
     staticClass: "form-group"
@@ -45040,7 +45012,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.save
     }
-  }, [_vm._v("save")])])])]) : _vm._e()])])])])])
+  }, [_vm._v("save")])])])])]) : _vm._e()])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -45169,6 +45141,66 @@ if (false) {
      require("vue-hot-reload-api").rerender("data-v-c4ee6fce", module.exports)
   }
 }
+
+/***/ }),
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(38)(
+  /* script */
+  __webpack_require__(65),
+  /* template */
+  null,
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/home/vagrant/code/ra2/resources/assets/js/components/Common.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-83f96d94", Component.options)
+  } else {
+    hotAPI.reload("data-v-83f96d94", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 65 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  hoge: function hoge() {
+    console.log('hoge');
+  },
+  errorMessage: function errorMessage(error, self) {
+
+    if (typeof self.loading !== 'undefined') self.loading = false;
+
+    if (typeof self.error !== 'undefined') self.error = error.message;
+
+    if (error.response) if (error.response.status == 401) window.location.href = "/login";
+  }
+});
 
 /***/ })
 /******/ ]);

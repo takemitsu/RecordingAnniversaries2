@@ -63,6 +63,8 @@
 </template>
 
 <script>
+  import Common from '../Common'
+
   export default {
     data () {
       return {
@@ -109,16 +111,7 @@
             }
           })
           .catch(function(error) {
-            self.loading = false
-            console.error(error)
-            if(error.response) {
-              self.error = error.response.status + " : " + error.response.data.message
-              if(error.response.status == 401) {
-                window.location.href = "/login"
-              }
-            } else {
-              self.error = error.message
-            }
+            Common.errorMessage(error, self)
           })
       },
 
@@ -137,16 +130,7 @@
               self.fetchData(self.page)
             })
             .catch(function(error) {
-              self.loading = false
-              console.error(error)
-              if(error.response) {
-                self.error = error.response.status + " : " + error.response.data.message
-                if(error.response.status == 401) {
-                  window.location.href = "/login"
-                }
-              } else {
-                self.error = error.message
-              }
+              Common.errorMessage(error, self)
             })
         }
       },

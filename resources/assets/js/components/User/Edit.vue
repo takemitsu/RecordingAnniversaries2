@@ -15,8 +15,8 @@
             </div>
           </div>
 
-          <div class="panel-body">
-            <form class="form-horizontal" v-if="user">
+          <div class="panel-body" v-if="user">
+            <form class="form-horizontal">
 
               <div class="form-group">
                 <label class="col-sm-3 control-label">Name</label>
@@ -55,6 +55,8 @@
 </template>
 
 <script>
+import Common from '../Common'
+
 export default {
   data () {
     return {
@@ -85,16 +87,7 @@ export default {
           self.user = response.data
         })
         .catch(function(error) {
-          self.loading = false
-          console.error(error)
-          if(error.response) {
-            self.error = error.response.status + " : " + error.response.data.message
-            if(error.response.status == 401) {
-              window.location.href = "/login"
-            }
-          } else {
-            self.error = error.message
-          }
+          Common.errorMessage(error, self)
         })
     },
     save() {
@@ -111,16 +104,7 @@ export default {
           self.$router.push({ name:'users'})
         })
         .catch(function(error) {
-          self.loading = false
-          console.error(error)
-          if(error.response) {
-            self.error = error.response.status + " : " + error.response.data.message
-            if(error.response.status == 401) {
-              window.location.href = "/login"
-            }
-          } else {
-            self.error = error.message
-          }
+          Common.errorMessage(error, self)
         })
     },
   }
