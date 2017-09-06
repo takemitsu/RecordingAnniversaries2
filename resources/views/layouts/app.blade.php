@@ -39,7 +39,9 @@
                         &nbsp;
                         @auth
                             <li><router-link to="/dashboard">Dashboard</router-link></li>
+                          @if(Auth::user()->is_admin)
                             <li><router-link to="/users">Users</router-link></li>
+                          @endif
                         @endauth
                     </ul>
 

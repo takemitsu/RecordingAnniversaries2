@@ -21,9 +21,11 @@
             </div>
           </div>
 
+        <div class="table-responsive">
           <table class="table table-bordered" v-if="users.length > 0">
             <thead>
               <tr>
+                <th>admin</th>
                 <th>name</th>
                 <th>email</th>
                 <th>created_at</th>
@@ -33,6 +35,9 @@
             </thead>
             <tbody>
               <tr v-for="user in users">
+                <td>
+                  <span v-if="user.is_admin">Admin</span>
+                </td>
                 <td>
                   <router-link :to="{name: 'user', params:{uuid: user.uuid }}">{{user.name}}</router-link>
                 </td>
@@ -46,6 +51,7 @@
               </tr>
             </tbody>
           </table>
+        </div>
 
           <div v-if="users.length == 0 && loading == false && error == null" class="alert alert-warning" style="margin-bottom: 0;">
             not found users.

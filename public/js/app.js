@@ -44594,6 +44594,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -44696,10 +44702,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "margin-bottom": "0"
     }
-  }, [_vm._v("\n            " + _vm._s(_vm.status) + "\n          ")])]) : _vm._e(), _vm._v(" "), (_vm.users.length > 0) ? _c('table', {
+  }, [_vm._v("\n            " + _vm._s(_vm.status) + "\n          ")])]) : _vm._e(), _vm._v(" "), _c('div', {
+    staticClass: "table-responsive"
+  }, [(_vm.users.length > 0) ? _c('table', {
     staticClass: "table table-bordered"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.users), function(user) {
-    return _c('tr', [_c('td', [_c('router-link', {
+    return _c('tr', [_c('td', [(user.is_admin) ? _c('span', [_vm._v("Admin")]) : _vm._e()]), _vm._v(" "), _c('td', [_c('router-link', {
       attrs: {
         "to": {
           name: 'user',
@@ -44726,7 +44734,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v("削除")])], 1)])
-  }))]) : _vm._e(), _vm._v(" "), (_vm.users.length == 0 && _vm.loading == false && _vm.error == null) ? _c('div', {
+  }))]) : _vm._e()]), _vm._v(" "), (_vm.users.length == 0 && _vm.loading == false && _vm.error == null) ? _c('div', {
     staticClass: "alert alert-warning",
     staticStyle: {
       "margin-bottom": "0"
@@ -44745,7 +44753,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })], 1) : _vm._e()])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("name")]), _vm._v(" "), _c('th', [_vm._v("email")]), _vm._v(" "), _c('th', [_vm._v("created_at")]), _vm._v(" "), _c('th', [_vm._v("updated_at")]), _vm._v(" "), _c('th', [_vm._v("action")])])])
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("admin")]), _vm._v(" "), _c('th', [_vm._v("name")]), _vm._v(" "), _c('th', [_vm._v("email")]), _vm._v(" "), _c('th', [_vm._v("created_at")]), _vm._v(" "), _c('th', [_vm._v("updated_at")]), _vm._v(" "), _c('th', [_vm._v("action")])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -44803,6 +44811,15 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Common__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Common___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Common__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -44993,6 +45010,43 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-sm-offset-3 col-sm-9"
+  }, [_c('div', {
+    staticClass: "checkbox"
+  }, [_c('label', [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.user.is_admin),
+      expression: "user.is_admin"
+    }],
+    attrs: {
+      "type": "checkbox"
+    },
+    domProps: {
+      "checked": Array.isArray(_vm.user.is_admin) ? _vm._i(_vm.user.is_admin, null) > -1 : (_vm.user.is_admin)
+    },
+    on: {
+      "__c": function($event) {
+        var $$a = _vm.user.is_admin,
+          $$el = $event.target,
+          $$c = $$el.checked ? (true) : (false);
+        if (Array.isArray($$a)) {
+          var $$v = null,
+            $$i = _vm._i($$a, $$v);
+          if ($$el.checked) {
+            $$i < 0 && (_vm.user.is_admin = $$a.concat($$v))
+          } else {
+            $$i > -1 && (_vm.user.is_admin = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+          }
+        } else {
+          _vm.user.is_admin = $$c
+        }
+      }
+    }
+  }), _vm._v(" admin\n                  ")])])])]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     staticClass: "col-sm-3 control-label"

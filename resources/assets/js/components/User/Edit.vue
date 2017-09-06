@@ -34,6 +34,15 @@
               </div>
 
               <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" v-model="user.is_admin"> admin
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
                 <label class="col-sm-3 control-label">Created At</label>
                 <div class="col-sm-9">
                   <p class="form-control-static">{{user.created_at}}</p>

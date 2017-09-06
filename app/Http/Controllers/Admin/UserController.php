@@ -47,10 +47,12 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:128',
             'email' => 'required|email|unique:users,email,'.$user->id.',id',
+            'is_admin' => 'required|boolean',
         ]);
 
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->is_admin = $request->is_admin;
         $user->save();
 
         return $user;
