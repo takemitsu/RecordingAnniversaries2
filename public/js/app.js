@@ -44639,10 +44639,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
       }).catch(function (error) {
         self.loading = false;
-        self.error = error.response.status + " : " + error.response.data.message;
-
-        if (error.response.status == 401) {
-          // TODO: Redirect
+        console.error(error);
+        if (error.response) {
+          self.error = error.response.status + " : " + error.response.data.message;
+          if (error.response.status == 401) {
+            window.location.href = "/login";
+          }
+        } else {
+          self.error = error.message;
         }
       });
     },
@@ -44652,17 +44656,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     del: function del(user) {
       if (confirm(user.name + " を削除しますか")) {
         var self = this;
+        self.error = null;
+        self.loading = true;
         return axios({
           method: 'delete',
           url: '/admin/api/user/' + encodeURIComponent(user.uuid)
         }).then(function (response) {
+          self.loading = false;
           self.fetchData(self.page);
         }).catch(function (error) {
           self.loading = false;
-          self.error = error.response.status + " : " + error.response.data.message;
-
-          if (error.response.status == 401) {
-            // TODO: Redirect
+          console.error(error);
+          if (error.response) {
+            self.error = error.response.status + " : " + error.response.data.message;
+            if (error.response.status == 401) {
+              window.location.href = "/login";
+            }
+          } else {
+            self.error = error.message;
           }
         });
       }
@@ -44891,15 +44902,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         self.user = response.data;
       }).catch(function (error) {
         self.loading = false;
-        self.error = error.response.status + " : " + error.response.data.message;
-
-        if (error.response.status == 401) {
-          // TODO: Redirect Login Page
+        console.error(error);
+        if (error.response) {
+          self.error = error.response.status + " : " + error.response.data.message;
+          if (error.response.status == 401) {
+            window.location.href = "/login";
+          }
+        } else {
+          self.error = error.message;
         }
       });
     },
     save: function save() {
       var self = this;
+      self.loading = true;
+      self.error = null;
       return axios({
         method: 'put',
         url: '/admin/api/user/' + encodeURIComponent(self.$route.params.uuid),
@@ -44908,13 +44925,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         self.loading = false;
         self.$router.push({ name: 'users' });
       }).catch(function (error) {
-        // ここには then 内でのエラーも catch されて実行される..
-        console.log('error', error);
         self.loading = false;
-        self.error = error.response.status + " : " + error.response.data.message;
-
-        if (error.response.status == 401) {
-          // TODO: Redirect Login Page
+        console.error(error);
+        if (error.response) {
+          self.error = error.response.status + " : " + error.response.data.message;
+          if (error.response.status == 401) {
+            window.location.href = "/login";
+          }
+        } else {
+          self.error = error.message;
         }
       });
     }

@@ -86,15 +86,21 @@ export default {
         })
         .catch(function(error) {
           self.loading = false
-          self.error = error.response.status + " : " + error.response.data.message
-
-          if(error.response.status == 401) {
-            // TODO: Redirect Login Page
+          console.error(error)
+          if(error.response) {
+            self.error = error.response.status + " : " + error.response.data.message
+            if(error.response.status == 401) {
+              window.location.href = "/login"
+            }
+          } else {
+            self.error = error.message
           }
         })
     },
     save() {
       var self = this
+      self.loading = true
+      self.error = null
       return axios({
           method: 'put',
           url: '/admin/api/user/' + encodeURIComponent(self.$route.params.uuid),
@@ -105,13 +111,15 @@ export default {
           self.$router.push({ name:'users'})
         })
         .catch(function(error) {
-          // ここには then 内でのエラーも catch されて実行される..
-          console.log('error', error)
           self.loading = false
-          self.error = error.response.status + " : " + error.response.data.message
-
-          if(error.response.status == 401) {
-            // TODO: Redirect Login Page
+          console.error(error)
+          if(error.response) {
+            self.error = error.response.status + " : " + error.response.data.message
+            if(error.response.status == 401) {
+              window.location.href = "/login"
+            }
+          } else {
+            self.error = error.message
           }
         })
     },

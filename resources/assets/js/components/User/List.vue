@@ -110,10 +110,14 @@
           })
           .catch(function(error) {
             self.loading = false
-            self.error = error.response.status + " : " + error.response.data.message
-
-            if(error.response.status == 401) {
-              // TODO: Redirect
+            console.error(error)
+            if(error.response) {
+              self.error = error.response.status + " : " + error.response.data.message
+              if(error.response.status == 401) {
+                window.location.href = "/login"
+              }
+            } else {
+              self.error = error.message
             }
           })
       },
@@ -122,19 +126,26 @@
       del(user) {
         if(confirm(user.name + " を削除しますか")) {
           var self = this
+          self.error = null
+          self.loading = true
           return axios({
               method:'delete',
               url: '/admin/api/user/' + encodeURIComponent(user.uuid),
             })
             .then(function(response) {
+              self.loading = false
               self.fetchData(self.page)
             })
             .catch(function(error) {
               self.loading = false
-              self.error = error.response.status + " : " + error.response.data.message
-
-              if(error.response.status == 401) {
-                // TODO: Redirect
+              console.error(error)
+              if(error.response) {
+                self.error = error.response.status + " : " + error.response.data.message
+                if(error.response.status == 401) {
+                  window.location.href = "/login"
+                }
+              } else {
+                self.error = error.message
               }
             })
         }
