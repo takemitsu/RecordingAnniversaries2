@@ -6,6 +6,8 @@
           <div class="panel-heading">{{title}}</div>
           <div class="panel-body">
             {{message}} - <b>{{now}}</b>
+              <button class="btn btn-danger btn-xs" v-if="interval" @click="stopDatetime()">stop</button>
+              <button class="btn btn-primary btn-xs" v-if="interval == null" @click="startDatetime()">start</button>
           </div>
         </div>
       </div>
@@ -26,10 +28,7 @@ export default {
   },
   created () {
     this.checkRoute()
-    var self = this
-    this.interval = setInterval(function() {
-      self.now = moment().format('YYYY-MM-DD HH:mm:ss')
-    }, 1000)
+    this.startDatetime()
   },
   mounted() {
     // this.checkRoute('mounted')
@@ -48,6 +47,20 @@ export default {
         this.title = "Dashboard"
         this.message = "Wellcome"
       }
+    },
+    startDatetime() {
+      var self = this
+      if(self.interval != null)
+        clearInterval(self.interval)
+
+      self.now = moment().format('YYYY-MM-DD HH:mm:ss')
+      self.interval = setInterval(function() {
+        self.now = moment().format('YYYY-MM-DD HH:mm:ss')
+      }, 1000)
+    },
+    stopDatetime() {
+      clearInterval(this.interval)
+      this.interval = null
     }
   }
 }

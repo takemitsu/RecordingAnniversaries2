@@ -45139,6 +45139,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -45152,10 +45154,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   created: function created() {
     this.checkRoute();
-    var self = this;
-    this.interval = setInterval(function () {
-      self.now = __WEBPACK_IMPORTED_MODULE_0_moment___default()().format('YYYY-MM-DD HH:mm:ss');
-    }, 1000);
+    this.startDatetime();
   },
   mounted: function mounted() {
     // this.checkRoute('mounted')
@@ -45174,6 +45173,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.title = "Dashboard";
         this.message = "Wellcome";
       }
+    },
+    startDatetime: function startDatetime() {
+      var self = this;
+      if (self.interval != null) clearInterval(self.interval);
+
+      self.now = __WEBPACK_IMPORTED_MODULE_0_moment___default()().format('YYYY-MM-DD HH:mm:ss');
+      self.interval = setInterval(function () {
+        self.now = __WEBPACK_IMPORTED_MODULE_0_moment___default()().format('YYYY-MM-DD HH:mm:ss');
+      }, 1000);
+    },
+    stopDatetime: function stopDatetime() {
+      clearInterval(this.interval);
+      this.interval = null;
     }
   }
 });
@@ -45195,7 +45207,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel-heading"
   }, [_vm._v(_vm._s(_vm.title))]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
-  }, [_vm._v("\n          " + _vm._s(_vm.message) + " - "), _c('b', [_vm._v(_vm._s(_vm.now))])])])])])])
+  }, [_vm._v("\n          " + _vm._s(_vm.message) + " - "), _c('b', [_vm._v(_vm._s(_vm.now))]), _vm._v(" "), (_vm.interval) ? _c('button', {
+    staticClass: "btn btn-danger btn-xs",
+    on: {
+      "click": function($event) {
+        _vm.stopDatetime()
+      }
+    }
+  }, [_vm._v("stop")]) : _vm._e(), _vm._v(" "), (_vm.interval == null) ? _c('button', {
+    staticClass: "btn btn-primary btn-xs",
+    on: {
+      "click": function($event) {
+        _vm.startDatetime()
+      }
+    }
+  }, [_vm._v("start")]) : _vm._e()])])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

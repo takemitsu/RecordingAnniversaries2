@@ -17,8 +17,19 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('home', 'HomeController@index')->name('home');
 
+Route::prefix('api')->group(function () {
+    Route::get('csrf', function() {
+        return csrf_token();
+    });
+    Route::resource('anniv', 'Api\AnnivController',['only' => [
+        'index', 'show', 'store', 'update', 'destroy',
+    ]]);
+    Route::resource('group', 'Api\GroupController',['only' => [
+        'index', 'show', 'store', 'update', 'destroy',
+    ]]);
+});
 
 // TODO: create routes/admin.php and edit app/Providers/RouteServiceProvider.php
 Route::prefix('admin')->group(function () {
