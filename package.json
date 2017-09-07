@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "laravel-vue-pagination": "^1.0.6",
+    "moment": "^2.18.1",
     "vue-router": "^2.7.0"
   }
 }

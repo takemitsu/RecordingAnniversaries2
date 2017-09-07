@@ -5,7 +5,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">{{title}}</div>
           <div class="panel-body">
-            {{message}}
+            {{message}} - <b>{{now}}</b>
           </div>
         </div>
       </div>
@@ -14,15 +14,22 @@
 </template>
 
 <script>
+import moment from 'moment';
 export default {
   data() {
     return {
       title: '',
       message: '',
+      now: moment().format('YYYY-MM-DD HH:mm:ss'),
+      interval: null,
     }
   },
   created () {
     this.checkRoute()
+    var self = this
+    this.interval = setInterval(function() {
+      self.now = moment().format('YYYY-MM-DD HH:mm:ss')
+    }, 1000)
   },
   mounted() {
     // this.checkRoute('mounted')
