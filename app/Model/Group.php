@@ -17,4 +17,17 @@ class Group extends Model
     ];
 
     protected $dates = ['deleted_at'];
+
+    // Model call 時に追加
+    protected $appends = ['annivs_count'];
+
+    // Anniv とは Relation してるよ設定
+    public function annivs() {
+        return $this->hasMany('App\Model\Anniv');
+    }
+    // Anniv のカウントをデフォルトで返す
+    public function getAnnivsCountAttribute()
+    {
+        return $this->annivs()->count();
+    }
 }

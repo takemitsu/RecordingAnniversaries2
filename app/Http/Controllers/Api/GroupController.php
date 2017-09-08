@@ -23,13 +23,16 @@ class GroupController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:128',
+            'name' => 'string|max:128',
             'desc' => 'string|max:255',
         ]);
 
+        // グループ名指定なし
+        $name = $request->input('name', 'no name');
+
         $group = new Group;
         $group->user_id = auth()->user()->id;
-        $group->name = $request->name;
+        $group->name = $name;
         $group->desc = $request->desc;
         $group->save();
 
@@ -60,6 +63,11 @@ class GroupController extends Controller
 
     public function destroy(Group $group)
     {
+        // anniv に使用されている場合、削除できない
+        if($group->annivs_count > 0) {
+            abort(412, 'used in annivs.');
+        }
+
         $group->delete();
         return [];
     }

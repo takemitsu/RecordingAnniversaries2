@@ -15,24 +15,35 @@ class AnnivController extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
-        return Anniv::orderBy('id')->get();
+        $request->validate([
+            'group_id' => 'exists:groups,id',
+        ]);
+        $annivs = Anniv::orderBy('id');
+        if($request->has('group_id')) {
+            $annivs = $annivs->where('group_id', $request->group_id);
+        }
+
+        return $annivs->get();
     }
 
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:128',
+            'name' => 'string|max:128',
             'desc' => 'string|max:255',
             'anniv_at' => 'required|date_format:Y-m-d',
             'group_id' => 'exists:groups,id',
         ]);
 
+        // 名前指定なし
+        $name = $request->input('name', 'no name');
+
         $anniv = new Anniv;
         $anniv->user_id = auth()->user()->id;
-        $anniv->name = $request->name;
+        $anniv->name = $name;
         $anniv->desc = $request->desc;
         $anniv->anniv_at = $request->anniv_at;
         if($request->has('group_id'))
