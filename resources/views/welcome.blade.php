@@ -82,6 +82,10 @@
                     {{ config('app.name', 'Laravel') }}
                 </div>
 
+                <div style="margin-bottom: 20px;">
+                    <a href="/home">Enter</a>
+                </div>
+
                 <div class="links">
                     <a href="http://laravel.jp">Laravel.JP</a>
                     <a href="https://laravel.com/docs">Documentation</a>
