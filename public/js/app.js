@@ -61590,13 +61590,17 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(205)
+}
 var Component = __webpack_require__(38)(
   /* script */
   __webpack_require__(193),
   /* template */
   __webpack_require__(194),
   /* styles */
-  null,
+  injectStyle,
   /* scopeId */
   null,
   /* moduleIdentifier (server only) */
@@ -61635,6 +61639,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Common___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Common__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment__ = __webpack_require__(66);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_moment__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -61960,7 +61973,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "margin-bottom": "0"
     }
-  }, [_vm._v("\n          not found annivs.\n        ")]) : _vm._e()])])])])
+  }, [_vm._v("\n          not found annivs.\n        ")]) : _vm._e()]), _vm._v(" "), (_vm.group) ? _c('router-link', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "to": {
+        name: 'anniv_edit',
+        params: {
+          id: 'new'
+        },
+        query: {
+          gid: _vm.group.id
+        }
+      }
+    }
+  }, [_vm._v("記念日追加")]) : _vm._e()], 1)])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -62698,7 +62724,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     on: {
-      "change": function($event) {
+      "change": [function($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
           return o.selected
         }).map(function(o) {
@@ -62706,7 +62732,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           return val
         });
         _vm.$set(_vm.dates, 0, $event.target.multiple ? $$selectedVal : $$selectedVal[0])
-      }
+      }, function($event) {
+        _vm.calc_wareki()
+      }]
     }
   }, _vm._l((_vm.years), function(y) {
     return _c('option', [_vm._v(_vm._s(y))])
@@ -62719,7 +62747,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     on: {
-      "change": function($event) {
+      "change": [function($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
           return o.selected
         }).map(function(o) {
@@ -62727,7 +62755,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           return val
         });
         _vm.$set(_vm.dates, 1, $event.target.multiple ? $$selectedVal : $$selectedVal[0])
-      }
+      }, function($event) {
+        _vm.calc_wareki()
+      }]
     }
   }, _vm._l((_vm.months), function(m) {
     return _c('option', [_vm._v(_vm._s(m))])
@@ -62740,7 +62770,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     on: {
-      "change": function($event) {
+      "change": [function($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
           return o.selected
         }).map(function(o) {
@@ -62748,11 +62778,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           return val
         });
         _vm.$set(_vm.dates, 2, $event.target.multiple ? $$selectedVal : $$selectedVal[0])
-      }
+      }, function($event) {
+        _vm.calc_wareki()
+      }]
     }
   }, _vm._l((_vm.days), function(d) {
     return _c('option', [_vm._v(_vm._s(d))])
-  })), _vm._v("\n                  日\n                ")])])]), _vm._v(" "), _c('div', {
+  })), _vm._v("\n                  日\n                ")]), _vm._v(" "), _c('div', [_vm._v(_vm._s(_vm.wareki))])])]), _vm._v(" "), _c('div', {
     staticClass: "form-group",
     staticStyle: {
       "margin-bottom": "0"
@@ -62784,6 +62816,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Common___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Common__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment__ = __webpack_require__(66);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_moment__);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+//
 //
 //
 //
@@ -62870,21 +62905,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       loading: false,
       anniv: null,
       error: null,
-      dates: __WEBPACK_IMPORTED_MODULE_1_moment___default()().format('YYYY-MM-DD').toString().split('-'),
+      dates: __WEBPACK_IMPORTED_MODULE_1_moment___default()().format('YYYY-M-D').toString().split('-'),
       years: [],
       months: [],
       days: [],
-      groups: []
+      groups: [],
+      wareki: null
     };
   },
+
+  // 作成時
   created: function created() {
     this.initialize();
-    this.fetchData();
   },
 
-  watch: {
-    '$route': 'fetchData'
-  },
   methods: {
     initialize: function initialize() {
       var years = [];
@@ -62906,6 +62940,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var self = this;
       axios.get('/api/group').then(function (response) {
         self.groups = response.data;
+        self.fetchData();
       }).catch(function (error) {
         __WEBPACK_IMPORTED_MODULE_0__Common___default.a.errorMessage(error, self);
       });
@@ -62914,8 +62949,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var self = this;
       self.error = null;
       self.anniv = null;
-      self.loading = true;
 
+      if (this.$route.params.id == 'new') {
+        var dates = __WEBPACK_IMPORTED_MODULE_1_moment___default()().format('YYYY-MM-DD').toString().split('-');
+        for (var i = 0; i < dates.length; i++) {
+          dates[i] = parseInt(dates[i], 10);
+        }
+        self.dates = dates;
+
+        self.anniv = {
+          group_id: self.$route.query.gid,
+          name: null,
+          // desc: null,
+          anniv_at: __WEBPACK_IMPORTED_MODULE_1_moment___default()().format('YYYY-MM-DD')
+        };
+        self.calc_wareki();
+        return;
+      }
+
+      self.loading = true;
       return axios.get('/api/anniv/' + encodeURIComponent(this.$route.params.id)).then(function (response) {
         self.loading = false;
         self.anniv = response.data;
@@ -62926,15 +62978,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           self.dates[i] = parseInt(self.dates[i], 10);
         }
         self.anniv.anniv_at = anniv_at.format('YYYY-MM-DD');
+        self.calc_wareki();
       }).catch(function (error) {
         __WEBPACK_IMPORTED_MODULE_0__Common___default.a.errorMessage(error, self);
       });
+    },
+    calc_wareki: function calc_wareki() {
+      if (_typeof(this.dates) == "object") {
+        var anniv_at = __WEBPACK_IMPORTED_MODULE_1_moment___default()(this.dates.join('-'), 'YYYY-M-D');
+        this.wareki = __WEBPACK_IMPORTED_MODULE_0__Common___default.a.wareki(anniv_at.format('YYYY-MM-DD'));
+      }
     },
     save: function save() {
       var self = this;
       self.error = null;
 
-      console.log(self.anniv);
+      if (self.anniv.desc == null || self.anniv.desc == "") {
+        delete self.anniv.desc;
+      }
 
       // 年月日合体
       var anniv_at = __WEBPACK_IMPORTED_MODULE_1_moment___default()(self.dates.join('-'), 'YYYY-M-D');
@@ -62942,12 +63003,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         self.error = "有効な日付を入力してください。";
         return;
       }
+      if (anniv_at.format('YYYY-M-D') != self.dates.join('-')) {
+        self.error = "有効な日付を選択してください。";
+        return;
+      }
       self.anniv.anniv_at = anniv_at.format('YYYY-MM-DD');
+
+      var method = 'post';
+      var url = '/api/anniv';
+      if (self.$route.params.id != 'new') {
+        method = 'put';
+        url = url + '/' + encodeURIComponent(self.$route.params.id);
+      }
 
       self.loading = true;
       return axios({
-        method: 'put',
-        url: '/api/anniv/' + encodeURIComponent(self.$route.params.id),
+        method: method,
+        url: url,
         data: self.anniv
       }).then(function (response) {
         self.loading = false;
@@ -62957,7 +63029,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     }
   }
+
 });
+
+/***/ }),
+/* 205 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(206);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(197)("1fa3e2a2", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-ba130510\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Show.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-ba130510\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Show.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 206 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(43)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n.group-row-line {\n  border-top: 1px solid #ddd;\n  margin-top: 10px;\n  padding-top: 10px;\n}\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);

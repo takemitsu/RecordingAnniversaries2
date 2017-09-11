@@ -1,3 +1,11 @@
+<style type="text/css">
+  .group-row-line {
+    border-top: 1px solid #ddd;
+    margin-top: 10px;
+    padding-top: 10px;
+  }
+</style>
+
 <template>
   <div class="container">
     <div class="row">
@@ -80,6 +88,7 @@
             not found annivs.
           </div>
         </div>
+        <router-link v-if="group" :to="{name: 'anniv_edit', params:{id: 'new'}, query:{gid: group.id }}" class="btn btn-primary">記念日追加</router-link>
       </div>
     </div>
   </div>

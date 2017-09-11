@@ -45,19 +45,20 @@
                 <label class="col-sm-3 control-label">Anniv_at</label>
                 <div class="col-sm-9">
                   <div class="form-inline">
-                    <select v-model="dates[0]" class="form-control">
+                    <select v-model="dates[0]" class="form-control" v-on:change="calc_wareki()">
                       <option v-for="y in years">{{y}}</option>
                     </select>
                     年
-                    <select v-model="dates[1]" class="form-control">
+                    <select v-model="dates[1]" class="form-control" v-on:change="calc_wareki()">
                       <option v-for="m in months">{{m}}</option>
                     </select>
                     月
-                    <select v-model="dates[2]" class="form-control">
+                    <select v-model="dates[2]" class="form-control" v-on:change="calc_wareki()">
                       <option v-for="d in days">{{d}}</option>
                     </select>
                     日
                   </div>
+                  <div>{{wareki}}</div>
                 </div>
               </div>
 
@@ -84,19 +85,17 @@ export default {
       loading: false,
       anniv:  null,
       error: null,
-      dates: moment().format('YYYY-MM-DD').toString().split('-'),
+      dates: moment().format('YYYY-M-D').toString().split('-'),
       years: [],
       months: [],
       days: [],
       groups: [],
+      wareki: null,
     }
   },
+  // 作成時
   created () {
     this.initialize()
-    this.fetchData()
-  },
-  watch: {
-    '$route': 'fetchData'
   },
   methods: {
     initialize() {
@@ -120,6 +119,7 @@ export default {
       axios.get('/api/group')
       .then(function(response) {
         self.groups = response.data
+        self.fetchData()
       })
       .catch(function(error) {
         Common.errorMessage(error, self)
@@ -129,8 +129,25 @@ export default {
       var self = this
       self.error = null
       self.anniv = null
-      self.loading = true
 
+      if(this.$route.params.id == 'new') {
+        var dates = moment().format('YYYY-MM-DD').toString().split('-')
+        for(var i = 0; i < dates.length; i++) {
+          dates[i] = parseInt(dates[i], 10)
+        }
+        self.dates = dates
+
+        self.anniv = {
+          group_id: self.$route.query.gid,
+          name: null,
+          // desc: null,
+          anniv_at: moment().format('YYYY-MM-DD'),
+        }
+        self.calc_wareki()
+        return
+      }
+
+      self.loading = true
       return axios.get('/api/anniv/' + encodeURIComponent(this.$route.params.id))
         .then(function(response) {
           self.loading = false
@@ -142,17 +159,25 @@ export default {
             self.dates[i] = parseInt(self.dates[i], 10)
           }
           self.anniv.anniv_at = anniv_at.format('YYYY-MM-DD')
-
+          self.calc_wareki()
         })
         .catch(function(error) {
           Common.errorMessage(error, self)
         })
     },
+    calc_wareki() {
+      if(typeof this.dates == "object") {
+        var anniv_at = moment(this.dates.join('-'),'YYYY-M-D')
+        this.wareki = Common.wareki(anniv_at.format('YYYY-MM-DD'))
+      }
+    },
     save() {
       var self = this
       self.error = null
 
-      console.log(self.anniv)
+      if(self.anniv.desc == null || self.anniv.desc == "") {
+        delete(self.anniv.desc)
+      }
 
       // 年月日合体
       var anniv_at = moment(self.dates.join('-'),'YYYY-M-D')
@@ -160,12 +185,23 @@ export default {
         self.error = "有効な日付を入力してください。"
         return
       }
+      if(anniv_at.format('YYYY-M-D') != self.dates.join('-')) {
+        self.error = "有効な日付を選択してください。"
+        return
+      }
       self.anniv.anniv_at = anniv_at.format('YYYY-MM-DD')
+
+      var method = 'post'
+      var url = '/api/anniv'
+      if(self.$route.params.id != 'new') {
+        method = 'put'
+        url = url + '/' + encodeURIComponent(self.$route.params.id)
+      }
 
       self.loading = true
       return axios({
-          method: 'put',
-          url: '/api/anniv/' + encodeURIComponent(self.$route.params.id),
+          method: method,
+          url: url,
           data: self.anniv,
         })
         .then(function(response) {
@@ -179,6 +215,7 @@ export default {
           Common.errorMessage(error, self)
         })
     },
-  }
+  },
+
 }
 </script>

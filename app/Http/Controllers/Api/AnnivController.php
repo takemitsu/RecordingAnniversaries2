@@ -35,7 +35,7 @@ class AnnivController extends Controller
             'name' => 'string|max:128',
             'desc' => 'string|max:255',
             'anniv_at' => 'required|date_format:Y-m-d',
-            'group_id' => 'exists:groups,id',
+            'group_id' => 'required|exists:groups,id',
         ]);
 
         // 名前指定なし
