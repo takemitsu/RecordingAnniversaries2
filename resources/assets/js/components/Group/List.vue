@@ -50,6 +50,8 @@
 
         </div>
 
+        <router-link :to="{name: 'group_edit', params:{id: 'new' }}" class="btn btn-primary">グループ追加</router-link>
+
       </div>
     </div>
   </div>

@@ -3,8 +3,9 @@
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
         <div class="panel panel-default">
-          <div class="panel-heading">
-            Edit Group
+          <div class="panel-heading" v-if="group">
+            <span v-if="group.id != null">Edit Group</span>
+            <span v-if="group.id == null">Create Group</span>
           </div>
           <div class="panel-body" v-if="loading">
             Loading...
@@ -68,8 +69,17 @@ export default {
       var self = this
       self.error = null
       self.group = null
-      self.loading = true
 
+      if(this.$route.params.id == 'new') {
+        self.group = {
+          id: null,
+          name: null,
+          desc: null,
+        }
+        return
+      }
+
+      self.loading = true
       return axios.get('/api/group/' + encodeURIComponent(this.$route.params.id))
         .then(function(response) {
           self.loading = false
@@ -83,9 +93,17 @@ export default {
       var self = this
       self.loading = true
       self.error = null
+
+      var method = 'post'
+      var url = '/api/group'
+      if(self.$route.params.id != 'new') {
+        method = 'put'
+        url = url + '/' + encodeURIComponent(self.$route.params.id)
+      }
+
       return axios({
-          method: 'put',
-          url: '/api/group/' + encodeURIComponent(self.$route.params.id),
+          method: method,
+          url: url,
           data: self.group,
         })
         .then(function(response) {

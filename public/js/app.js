@@ -61410,6 +61410,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -61563,7 +61565,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "margin-bottom": "0"
     }
-  }, [_vm._v("\n          not found groups.\n        ")]) : _vm._e()])])])])
+  }, [_vm._v("\n          not found groups.\n        ")]) : _vm._e()]), _vm._v(" "), _c('router-link', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "to": {
+        name: 'group_edit',
+        params: {
+          id: 'new'
+        }
+      }
+    }
+  }, [_vm._v("グループ追加")])], 1)])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -62348,6 +62360,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -62371,8 +62384,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var self = this;
       self.error = null;
       self.group = null;
-      self.loading = true;
 
+      if (this.$route.params.id == 'new') {
+        self.group = {
+          id: null,
+          name: null,
+          desc: null
+        };
+        return;
+      }
+
+      self.loading = true;
       return axios.get('/api/group/' + encodeURIComponent(this.$route.params.id)).then(function (response) {
         self.loading = false;
         self.group = response.data;
@@ -62384,9 +62406,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var self = this;
       self.loading = true;
       self.error = null;
+
+      var method = 'post';
+      var url = '/api/group';
+      if (self.$route.params.id != 'new') {
+        method = 'put';
+        url = url + '/' + encodeURIComponent(self.$route.params.id);
+      }
+
       return axios({
-        method: 'put',
-        url: '/api/group/' + encodeURIComponent(self.$route.params.id),
+        method: method,
+        url: url,
         data: self.group
       }).then(function (response) {
         self.loading = false;
@@ -62411,9 +62441,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-md-6 col-md-offset-3"
   }, [_c('div', {
     staticClass: "panel panel-default"
-  }, [_c('div', {
+  }, [(_vm.group) ? _c('div', {
     staticClass: "panel-heading"
-  }, [_vm._v("\n          Edit Group\n        ")]), _vm._v(" "), (_vm.loading) ? _c('div', {
+  }, [(_vm.group.id != null) ? _c('span', [_vm._v("Edit Group")]) : _vm._e(), _vm._v(" "), (_vm.group.id == null) ? _c('span', [_vm._v("Create Group")]) : _vm._e()]) : _vm._e(), _vm._v(" "), (_vm.loading) ? _c('div', {
     staticClass: "panel-body"
   }, [_vm._v("\n          Loading...\n        ")]) : _vm._e(), _vm._v(" "), (_vm.error) ? _c('div', {
     staticClass: "panel-body"
