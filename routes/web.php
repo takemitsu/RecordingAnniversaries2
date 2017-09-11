@@ -23,6 +23,9 @@ Route::prefix('api')->group(function () {
     Route::get('csrf', function() {
         return csrf_token();
     });
+
+    Route::get('dashboard', 'Api\DashboardController@dashboard');
+
     Route::resource('anniv', 'Api\AnnivController',['only' => [
         'index', 'show', 'store', 'update', 'destroy',
     ]]);
