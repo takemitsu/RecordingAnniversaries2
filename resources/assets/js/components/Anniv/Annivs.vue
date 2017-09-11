@@ -82,18 +82,11 @@ export default {
       loading: false,
       groups: [],
       error: null,
-      data: {
-        total: 0,
-      },
     }
   },
   created () {
     // view が作られた時にデータを取得
     this.fetchData()
-  },
-  watch: {
-    // ルートが変更されたらこのメソッドを再び呼び出す
-    '$route': 'fetchData'
   },
   methods: {
     fetchData () {

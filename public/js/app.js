@@ -793,7 +793,7 @@ __webpack_require__(10);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('pagination', __webpack_require__(54));
 
-var routes = [{ path: '/users', name: "users", component: __webpack_require__(55) }, { path: '/user/:uuid', name: "user", component: __webpack_require__(58) }, { path: '/', component: __webpack_require__(61) }, { path: '/dashboard', component: __webpack_require__(61) }, { path: '/groups', name: "groups", component: __webpack_require__(189) }, { path: '/group/:id', name: "group", component: __webpack_require__(192) }, { path: '/group/:id/edit', name: "group_edit", component: __webpack_require__(199) }, { path: '/annivs', name: "annivs", component: __webpack_require__(186) }, { path: '/anniv/:id/edit', name: "anniv_edit", component: __webpack_require__(202) }, { path: '*', component: __webpack_require__(207) }];
+var routes = [{ path: '/users', name: "users", component: __webpack_require__(55) }, { path: '/user/:uuid', name: "user", component: __webpack_require__(58) }, { path: '/', name: "home", component: __webpack_require__(186) }, { path: '/dashboard', name: "annivs", component: __webpack_require__(186) }, { path: '/groups', name: "groups", component: __webpack_require__(189) }, { path: '/group/:id', name: "group", component: __webpack_require__(192) }, { path: '/group/:id/edit', name: "group_edit", component: __webpack_require__(199) }, { path: '/anniv/:id/edit', name: "anniv_edit", component: __webpack_require__(202) }, { path: '*', component: __webpack_require__(207) }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     routes: routes
@@ -45158,149 +45158,9 @@ if (false) {
 }
 
 /***/ }),
-/* 61 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var Component = __webpack_require__(38)(
-  /* script */
-  __webpack_require__(62),
-  /* template */
-  __webpack_require__(63),
-  /* styles */
-  null,
-  /* scopeId */
-  null,
-  /* moduleIdentifier (server only) */
-  null
-)
-Component.options.__file = "/home/vagrant/code/ra2/resources/assets/js/components/Dashboard.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Dashboard.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-c4ee6fce", Component.options)
-  } else {
-    hotAPI.reload("data-v-c4ee6fce", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 62 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(66);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      title: '',
-      message: '',
-      now: __WEBPACK_IMPORTED_MODULE_0_moment___default()().format('YYYY-MM-DD HH:mm:ss'),
-      interval: null
-    };
-  },
-  created: function created() {
-    this.checkRoute();
-    this.startDatetime();
-  },
-
-  methods: {
-    checkRoute: function checkRoute() {
-      this.title = "Dashboard";
-      this.message = "Wellcome";
-    },
-    startDatetime: function startDatetime() {
-      var self = this;
-      if (self.interval != null) clearInterval(self.interval);
-
-      self.now = __WEBPACK_IMPORTED_MODULE_0_moment___default()().format('YYYY-MM-DD HH:mm:ss');
-      self.interval = setInterval(function () {
-        self.now = __WEBPACK_IMPORTED_MODULE_0_moment___default()().format('YYYY-MM-DD HH:mm:ss');
-      }, 1000);
-    },
-    stopDatetime: function stopDatetime() {
-      clearInterval(this.interval);
-      this.interval = null;
-    }
-  }
-});
-
-/***/ }),
-/* 63 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "container"
-  }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-8 col-md-offset-2"
-  }, [_c('div', {
-    staticClass: "panel panel-default"
-  }, [_c('div', {
-    staticClass: "panel-heading"
-  }, [_vm._v(_vm._s(_vm.title))]), _vm._v(" "), _c('div', {
-    staticClass: "panel-body"
-  }, [_vm._v("\n          " + _vm._s(_vm.message) + " - "), _c('b', [_vm._v(_vm._s(_vm.now))]), _vm._v(" "), (_vm.interval) ? _c('button', {
-    staticClass: "btn btn-danger btn-xs",
-    on: {
-      "click": function($event) {
-        _vm.stopDatetime()
-      }
-    }
-  }, [_vm._v("stop")]) : _vm._e(), _vm._v(" "), (_vm.interval == null) ? _c('button', {
-    staticClass: "btn btn-primary btn-xs",
-    on: {
-      "click": function($event) {
-        _vm.startDatetime()
-      }
-    }
-  }, [_vm._v("start")]) : _vm._e()])])])])])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-c4ee6fce", module.exports)
-  }
-}
-
-/***/ }),
+/* 61 */,
+/* 62 */,
+/* 63 */,
 /* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -61366,10 +61226,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return {
       loading: false,
       groups: [],
-      error: null,
-      data: {
-        total: 0
-      }
+      error: null
     };
   },
   created: function created() {
@@ -61377,10 +61234,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     this.fetchData();
   },
 
-  watch: {
-    // ルートが変更されたらこのメソッドを再び呼び出す
-    '$route': 'fetchData'
-  },
   methods: {
     fetchData: function fetchData() {
       var self = this;

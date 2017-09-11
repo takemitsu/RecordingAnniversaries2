@@ -40,7 +40,6 @@
                         @auth
                             <li><router-link to="/dashboard">Dashboard</router-link></li>
                             <li><router-link to="/groups">Groups</router-link></li>
-                            <li><router-link to="/annivs">Annivs</router-link></li>
                         @endauth
                     </ul>
 
