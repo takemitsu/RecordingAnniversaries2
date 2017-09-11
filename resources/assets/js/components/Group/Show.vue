@@ -70,7 +70,7 @@
                   <small style="color:#9d9d9d;">{{anniv.desc}}</small>
                 </div>
                 <div class="col-sm-2 text-right">
-                  <router-link :to="{anniv: 'anniv_edit', params:{id: anniv.id }}" class="btn btn-default btn-xs">編集</router-link>
+                  <router-link :to="{name: 'anniv_edit', params:{id: anniv.id }}" class="btn btn-default btn-xs">編集</router-link>
                   <button class="btn btn-danger btn-xs" @click="del_anniv(anniv)">削除</button>
                 </div>
               </div>

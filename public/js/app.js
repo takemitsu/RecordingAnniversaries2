@@ -793,7 +793,7 @@ __webpack_require__(10);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('pagination', __webpack_require__(54));
 
-var routes = [{ path: '/users', name: "users", component: __webpack_require__(55) }, { path: '/user/:uuid', name: "user", component: __webpack_require__(58) }, { path: '/dashboard', component: __webpack_require__(61) }, { path: '/annivs', component: __webpack_require__(186) }, { path: '/groups', name: "groups", component: __webpack_require__(189) }, { path: '/group/:id', name: "group", component: __webpack_require__(192) }, { path: '/group/:id/edit', name: "group_edit", component: __webpack_require__(199) }, { path: '/anniv/:id/edit', name: "anniv_edit", component: __webpack_require__(202) }, { path: '*', component: __webpack_require__(61) }];
+var routes = [{ path: '/users', name: "users", component: __webpack_require__(55) }, { path: '/user/:uuid', name: "user", component: __webpack_require__(58) }, { path: '/dashboard', component: __webpack_require__(61) }, { path: '/annivs', name: "annivs", component: __webpack_require__(186) }, { path: '/groups', name: "groups", component: __webpack_require__(189) }, { path: '/group/:id', name: "group", component: __webpack_require__(192) }, { path: '/group/:id/edit', name: "group_edit", component: __webpack_require__(199) }, { path: '/anniv/:id/edit', name: "anniv_edit", component: __webpack_require__(202) }, { path: '*', component: __webpack_require__(61) }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     routes: routes
@@ -61273,12 +61273,16 @@ module.exports = Component.exports
 
 /***/ }),
 /* 187 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
 //
+
+/* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
 /* 188 */
@@ -61925,7 +61929,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "btn btn-default btn-xs",
       attrs: {
         "to": {
-          anniv: 'anniv_edit',
+          name: 'anniv_edit',
           params: {
             id: anniv.id
           }
@@ -62503,7 +62507,7 @@ if (false) {
 var disposed = false
 var Component = __webpack_require__(38)(
   /* script */
-  null,
+  __webpack_require__(204),
   /* template */
   __webpack_require__(203),
   /* styles */
@@ -62541,7 +62545,196 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c("div")
+  return _c('div', {
+    staticClass: "container"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-6 col-md-offset-3"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("\n          Edit Anniv\n        ")]), _vm._v(" "), (_vm.loading) ? _c('div', {
+    staticClass: "panel-body"
+  }, [_vm._v("\n          Loading...\n        ")]) : _vm._e(), _vm._v(" "), (_vm.error) ? _c('div', {
+    staticClass: "panel-body"
+  }, [_c('div', {
+    staticClass: "alert alert-danger",
+    staticStyle: {
+      "margin-bottom": "0"
+    }
+  }, [_vm._v("\n            " + _vm._s(_vm.error) + "\n          ")])]) : _vm._e(), _vm._v(" "), (_vm.anniv) ? _c('div', {
+    staticClass: "panel-body"
+  }, [_c('form', {
+    staticClass: "form-horizontal"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "col-sm-3 control-label"
+  }, [_vm._v("Group")]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-9"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.anniv.group_id),
+      expression: "anniv.group_id"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.anniv.group_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, _vm._l((_vm.groups), function(g) {
+    return _c('option', {
+      domProps: {
+        "value": g.id
+      }
+    }, [_vm._v(_vm._s(g.name))])
+  }))])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "col-sm-3 control-label"
+  }, [_vm._v("Name")]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-9"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.anniv.name),
+      expression: "anniv.name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "placeholder": "name"
+    },
+    domProps: {
+      "value": (_vm.anniv.name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.anniv.name = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "col-sm-3 control-label"
+  }, [_vm._v("Desc")]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-9"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.anniv.desc),
+      expression: "anniv.desc"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "placeholder": "description"
+    },
+    domProps: {
+      "value": (_vm.anniv.desc)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.anniv.desc = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "col-sm-3 control-label"
+  }, [_vm._v("Anniv_at")]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-9"
+  }, [_c('div', {
+    staticClass: "form-inline"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.dates[0]),
+      expression: "dates[0]"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.$set(_vm.dates, 0, $event.target.multiple ? $$selectedVal : $$selectedVal[0])
+      }
+    }
+  }, _vm._l((_vm.years), function(y) {
+    return _c('option', [_vm._v(_vm._s(y))])
+  })), _vm._v("\n                  年\n                  "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.dates[1]),
+      expression: "dates[1]"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.$set(_vm.dates, 1, $event.target.multiple ? $$selectedVal : $$selectedVal[0])
+      }
+    }
+  }, _vm._l((_vm.months), function(m) {
+    return _c('option', [_vm._v(_vm._s(m))])
+  })), _vm._v("\n                  月\n                  "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.dates[2]),
+      expression: "dates[2]"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.$set(_vm.dates, 2, $event.target.multiple ? $$selectedVal : $$selectedVal[0])
+      }
+    }
+  }, _vm._l((_vm.days), function(d) {
+    return _c('option', [_vm._v(_vm._s(d))])
+  })), _vm._v("\n                  日\n                ")])])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group",
+    staticStyle: {
+      "margin-bottom": "0"
+    }
+  }, [_c('div', {
+    staticClass: "col-sm-9 col-sm-offset-3"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    on: {
+      "click": _vm.save
+    }
+  }, [_vm._v("save")])])])])]) : _vm._e()])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -62550,6 +62743,191 @@ if (false) {
      require("vue-hot-reload-api").rerender("data-v-6e94e2d4", module.exports)
   }
 }
+
+/***/ }),
+/* 204 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Common__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Common___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Common__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_moment__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      loading: false,
+      anniv: null,
+      error: null,
+      dates: __WEBPACK_IMPORTED_MODULE_1_moment___default()().format('YYYY-MM-DD').toString().split('-'),
+      years: [],
+      months: [],
+      days: [],
+      groups: []
+    };
+  },
+  created: function created() {
+    this.initialize();
+    this.fetchData();
+  },
+
+  watch: {
+    '$route': 'fetchData'
+  },
+  methods: {
+    initialize: function initialize() {
+      var years = [];
+      for (var i = 1900; i <= __WEBPACK_IMPORTED_MODULE_1_moment___default()().year(); i++) {
+        years.push(i);
+      }this.years = years;
+
+      var months = [];
+      for (var i = 1; i <= 12; i++) {
+        months.push(i);
+      }this.months = months;
+
+      var days = [];
+      for (var i = 1; i <= 31; i++) {
+        days.push(i);
+      }this.days = days;
+
+      var groups = [];
+      var self = this;
+      axios.get('/api/group').then(function (response) {
+        self.groups = response.data;
+      }).catch(function (error) {
+        __WEBPACK_IMPORTED_MODULE_0__Common___default.a.errorMessage(error, self);
+      });
+    },
+    fetchData: function fetchData() {
+      var self = this;
+      self.error = null;
+      self.anniv = null;
+      self.loading = true;
+
+      return axios.get('/api/anniv/' + encodeURIComponent(this.$route.params.id)).then(function (response) {
+        self.loading = false;
+        self.anniv = response.data;
+        // 編集
+        var anniv_at = __WEBPACK_IMPORTED_MODULE_1_moment___default()(self.anniv.anniv_at, 'YYYY-MM-DD');
+        self.dates = anniv_at.format('YYYY-MM-DD').toString().split('-');
+        for (var i = 0; i < self.dates.length; i++) {
+          self.dates[i] = parseInt(self.dates[i], 10);
+        }
+        self.anniv.anniv_at = anniv_at.format('YYYY-MM-DD');
+      }).catch(function (error) {
+        __WEBPACK_IMPORTED_MODULE_0__Common___default.a.errorMessage(error, self);
+      });
+    },
+    save: function save() {
+      var self = this;
+      self.error = null;
+
+      console.log(self.anniv);
+
+      // 年月日合体
+      var anniv_at = __WEBPACK_IMPORTED_MODULE_1_moment___default()(self.dates.join('-'), 'YYYY-M-D');
+      if (anniv_at.isValid() == false) {
+        self.error = "有効な日付を入力してください。";
+        return;
+      }
+      self.anniv.anniv_at = anniv_at.format('YYYY-MM-DD');
+
+      self.loading = true;
+      return axios({
+        method: 'put',
+        url: '/api/anniv/' + encodeURIComponent(self.$route.params.id),
+        data: self.anniv
+      }).then(function (response) {
+        self.loading = false;
+        if (self.anniv.group_id != 0) self.$router.push({ name: 'group', params: { id: self.anniv.group_id } });else self.$router.push({ name: "annivs" });
+      }).catch(function (error) {
+        __WEBPACK_IMPORTED_MODULE_0__Common___default.a.errorMessage(error, self);
+      });
+    }
+  }
+});
 
 /***/ })
 /******/ ]);
