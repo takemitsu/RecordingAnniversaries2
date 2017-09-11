@@ -167,6 +167,25 @@ export default {
             }
           }
         })
+    },
+    // データ削除
+    del_anniv(anniv) {
+      if(confirm(anniv.name + " を削除しますか")) {
+        var self = this
+        self.error = null
+        self.loading = true
+        return axios({
+            method:'delete',
+            url: '/api/anniv/' + encodeURIComponent(anniv.id),
+          })
+          .then(function(response) {
+            self.loading = false
+            self.fetchDataAnniv()
+          })
+          .catch(function(error) {
+            Common.errorMessage(error, self)
+          })
+      }
     }
   }
 }

@@ -61851,6 +61851,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           }
         }
       });
+    },
+
+    // データ削除
+    del_anniv: function del_anniv(anniv) {
+      if (confirm(anniv.name + " を削除しますか")) {
+        var self = this;
+        self.error = null;
+        self.loading = true;
+        return axios({
+          method: 'delete',
+          url: '/api/anniv/' + encodeURIComponent(anniv.id)
+        }).then(function (response) {
+          self.loading = false;
+          self.fetchDataAnniv();
+        }).catch(function (error) {
+          __WEBPACK_IMPORTED_MODULE_0__Common___default.a.errorMessage(error, self);
+        });
+      }
     }
   }
 });
