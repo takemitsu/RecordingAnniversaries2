@@ -14,7 +14,18 @@ export default {
         window.location.href = "/login"
       }
       else if(typeof self.error !== 'undefined') {
-        if(error.response.data && error.response.data.message) {
+        if(error.response.status == 422 && error.response.data && error.response.data.errors) {
+          var err_messages = []
+          var errors = error.response.data.errors
+          for(var e in errors) {
+            var err_strings = errors[e]
+            for(var i in err_strings) {
+              err_messages.push(err_strings[i])
+            }
+          }
+          self.error = err_messages.join("\n")
+        }
+        else if(error.response.data && error.response.data.message) {
           self.error = error.response.data.message + " : " + error.response.status
         }
       }

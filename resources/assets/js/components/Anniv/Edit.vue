@@ -37,7 +37,8 @@
               <div class="form-group">
                 <label class="col-sm-3 control-label">Desc</label>
                 <div class="col-sm-9">
-                  <input v-model="anniv.desc" placeholder="description" class="form-control">
+                  <textarea v-model="anniv.desc" placeholder="description" class="form-control" rows="3">
+                  </textarea>
                 </div>
               </div>
 

@@ -30,23 +30,10 @@ export default {
     this.checkRoute()
     this.startDatetime()
   },
-  mounted() {
-    // this.checkRoute('mounted')
-  },
-  watch: {
-    // ルートが変更されたらこのメソッドを再び呼び出します
-    '$route': 'checkRoute'
-  },
   methods: {
     checkRoute() {
-      if(this.$route.path != '/dashboard' && this.$route.path != '/') {
-        this.title = "not found"
-        this.message = this.$route.path + " は存在しません"
-      }
-      else {
-        this.title = "Dashboard"
-        this.message = "Wellcome"
-      }
+      this.title = "Dashboard"
+      this.message = "Wellcome"
     },
     startDatetime() {
       var self = this
