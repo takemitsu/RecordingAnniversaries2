@@ -53,6 +53,7 @@
                           @if(Auth::user()->is_admin)
                             <li><router-link to="/users">Users</router-link></li>
                           @endif
+                            <li><router-link to="/oauth">OAuth</router-link></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
